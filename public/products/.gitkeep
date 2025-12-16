@@ -1,0 +1,12 @@
+# Esta pasta contém as imagens thumbnail dos produtos
+# 
+# Estrutura:
+# public/products/
+#   ├── DS-KIT342MX.png
+#   ├── DS-KIT342MFWX.png
+#   ├── DS-2CD2042WD.png
+#   └── ...
+#
+# Os arquivos devem ser referenciados no products.json como:
+# "thumbnail": "/products/DS-KIT342MX.png"
+

@@ -1,0 +1,230 @@
+/* Search Section - Tema Escuro */
+
+.main {
+  min-height: 100vh;
+  background: var(--hikvision-dark);
+  padding: 2rem 0;
+}
+
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Caixa de Busca */
+.searchBox {
+  background: var(--hikvision-gray-dark);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.searchForm {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 300px;
+  padding: 0.875rem 1.25rem;
+  font-size: 1rem;
+  background: var(--hikvision-gray-medium);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--hikvision-red);
+  background: #1f1f1f;
+}
+
+.searchInput::placeholder {
+  color: var(--text-secondary);
+}
+
+.searchInput:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Botões */
+.btnSearch,
+.btnHelp,
+.btnNotFound {
+  padding: 0.875rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.btnSearch {
+  background: var(--hikvision-red);
+  color: white;
+}
+
+.btnSearch:hover:not(:disabled) {
+  background: #c10510;
+  transform: translateY(-2px);
+}
+
+.btnSearch:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btnHelp {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btnHelp:hover {
+  background: var(--hikvision-gray-medium);
+  border-color: var(--hikvision-gray);
+}
+
+.btnNotFound {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
+}
+
+.btnNotFound:hover {
+  background: var(--hikvision-gray-medium);
+  border-color: var(--hikvision-red);
+  color: var(--hikvision-red);
+}
+
+/* Error Box */
+.errorBox {
+  background: rgba(227, 6, 19, 0.1);
+  border-left: 4px solid var(--hikvision-red);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.errorBox h3 {
+  margin-bottom: 0.5rem;
+  color: var(--hikvision-red);
+}
+
+.errorBox p {
+  color: var(--text-secondary);
+}
+
+/* Results Section */
+.resultsSection {
+  margin-top: 2rem;
+}
+
+.productsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+/* No Results */
+.noResults {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-secondary);
+}
+
+.noResults p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-top: 1px solid var(--border-color);
+  color: var(--text-secondary);
+}
+
+.paginationButtons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.paginationButtons button {
+  padding: 0.5rem 1.25rem;
+  background: var(--hikvision-gray-medium);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.paginationButtons button:hover:not(:disabled) {
+  background: var(--hikvision-gray);
+  border-color: var(--hikvision-red);
+}
+
+.paginationButtons button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .searchBox {
+    padding: 1.5rem;
+  }
+
+  .searchForm {
+    flex-direction: column;
+  }
+
+  .searchInput {
+    min-width: 100%;
+  }
+
+  .btnSearch,
+  .btnHelp,
+  .btnNotFound {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .productsGrid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1rem;
+  }
+
+  .pagination {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}

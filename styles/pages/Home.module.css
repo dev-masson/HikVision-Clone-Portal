@@ -1,0 +1,10 @@
+/* ========================================
+   HOME PAGE LAYOUT
+   ======================================== */
+
+.appContainer {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+

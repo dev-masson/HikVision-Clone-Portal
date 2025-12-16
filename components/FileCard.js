@@ -1,0 +1,172 @@
+import { useState } from 'react';
+import styles from '../styles/components/FileCard.module.css';
+
+export default function FileCard({ file, viewMode = 'cards' }) {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopyLink = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    const url = file.downloadUrl || file.url || '';
+    if (url) {
+      navigator.clipboard.writeText(url).then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      }).catch(() => {
+        // Fallback para navegadores antigos
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      });
+    }
+  };
+  const getFileIcon = (type) => {
+    switch (type) {
+      case 'firmware':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            {/* Símbolo </> */}
+            <path d="M8 9 L10 12 L8 15" stroke="currentColor" fill="none"></path>
+            <path d="M16 9 L14 12 L16 15" stroke="currentColor" fill="none"></path>
+            <line x1="11" y1="12" x2="13" y2="12" stroke="currentColor"></line>
+          </svg>
+        );
+      case 'image':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21 15 16 10 5 21"></polyline>
+          </svg>
+        );
+      case 'video':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <polygon points="23 7 16 12 23 17 23 7"></polygon>
+            <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+          </svg>
+        );
+      case 'pdf':
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <text x="8" y="17" fontSize="6" fill="currentColor">PDF</text>
+          </svg>
+        );
+      default:
+        return (
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+            <polyline points="13 2 13 9 20 9"></polyline>
+          </svg>
+        );
+    }
+  };
+
+  const formatFileSize = (bytes) => {
+    if (!bytes) return '-';
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / (1024 * 1024)).toFixed(1) + ' MB';
+  };
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '-';
+    const [year, month, day] = dateString.split('-');
+    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    return date.toLocaleDateString('pt-BR');
+  };
+
+  if (viewMode === 'list') {
+    const downloadUrl = file.downloadUrl || file.url || '#';
+    
+    return (
+      <div className={styles.listItem}>
+        <div className={styles.listIcon}>
+          {getFileIcon(file.type)}
+        </div>
+        <div className={styles.listInfo}>
+          <span className={styles.listName}>{file.name}</span>
+          {file.description && (
+            <span className={styles.listDescription}>{file.description}</span>
+          )}
+          <span className={styles.listMeta}>
+            Adicionado em: {formatDate(file.date)}
+          </span>
+        </div>
+        <div className={styles.listActions}>
+          <button 
+            className={styles.copyButton}
+            onClick={handleCopyLink}
+            title={copied ? "Link copiado!" : "Copiar link"}
+          >
+            {copied ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            )}
+          </button>
+          <a 
+            href={downloadUrl} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className={styles.downloadButton}
+            onClick={(e) => e.stopPropagation()}
+            title="Download"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+              <polyline points="7 10 12 15 17 10"></polyline>
+              <line x1="12" y1="15" x2="12" y2="3"></line>
+            </svg>
+          </a>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <a 
+      href={file.downloadUrl || file.url || '#'} 
+      target="_blank" 
+      rel="noopener noreferrer"
+      className={styles.card}
+    >
+      <div className={styles.cardIcon}>
+        {file.thumbnail ? (
+          <img src={file.thumbnail} alt={file.name} className={styles.thumbnail} />
+        ) : (
+          getFileIcon(file.type)
+        )}
+      </div>
+      <div className={styles.cardContent}>
+        <h3 className={styles.cardTitle}>{file.name}</h3>
+        <div className={styles.cardMeta}>
+          <span>{formatFileSize(file.size)}</span>
+          {file.date && <span>{formatDate(file.date)}</span>}
+        </div>
+      </div>
+      <div className={styles.cardOverlay}>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        <span>Download</span>
+      </div>
+    </a>
+  );
+}
+

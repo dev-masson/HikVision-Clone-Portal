@@ -1,0 +1,95 @@
+/* Header - Tema Escuro */
+
+.header {
+  background: var(--hikvision-gray-dark);
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 0;
+}
+
+.headerContainer {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logoLink {
+  display: flex;
+  align-items: center;
+}
+
+.navDesktop {
+  display: flex;
+  gap: 2rem;
+}
+
+.navLink {
+  color: var(--text-primary);
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navLink:hover {
+  color: var(--hikvision-red);
+  background: var(--hikvision-gray-medium);
+}
+
+.menuToggle {
+  display: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  color: var(--text-primary);
+}
+
+.navMobile {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--hikvision-gray-dark);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  padding: 1rem;
+  min-width: 200px;
+  z-index: 100;
+}
+
+.navLinkMobile {
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--text-primary);
+  font-weight: 500;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+}
+
+.navLinkMobile:hover {
+  background: var(--hikvision-gray-medium);
+  color: var(--hikvision-red);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navDesktop {
+    display: none;
+  }
+
+  .menuToggle {
+    display: block;
+  }
+
+  .navMobile {
+    display: block;
+  }
+
+  .headerContainer {
+    padding: 0 1rem;
+  }
+}

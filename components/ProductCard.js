@@ -1,0 +1,67 @@
+import { useState } from 'react';
+import styles from '../styles/components/ProductCard.module.css';
+
+export default function ProductCard({ product }) {
+
+  const name = product.model || 'Sem nome';
+  const imageUrl = product.thumbnail || null;
+  const productUrl = `/produto/${encodeURIComponent(product.model)}`;
+  const [imageError, setImageError] = useState(false);
+  const firmwareCount = product.files?.firmwares?.length || 0;
+  const documentCount = (product.files?.documents?.length || 0) + (product.files?.videos?.length || 0);
+
+  return (
+    <div className={styles.card}>
+      <div className={styles.imageContainer}>
+        {imageUrl && !imageError ? (
+          <img 
+            src={imageUrl} 
+            alt={name}
+            className={styles.productImage}
+            onError={() => {
+              console.error('Erro ao carregar imagem:', imageUrl);
+              setImageError(true);
+            }}
+            onLoad={() => console.log('Imagem carregada:', imageUrl)}
+          />
+        ) : (
+          <div className={styles.placeholderImage}>
+            <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+          </div>
+        )}
+      </div>
+      
+      <div className={styles.cardContent}>
+        <h3 className={styles.productName}>{name}</h3>
+        
+        <div className={styles.stats}>
+          <span className={styles.stat} title="Firmwares">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M8 9 L10 12 L8 15" stroke="currentColor" fill="none"></path>
+              <path d="M16 9 L14 12 L16 15" stroke="currentColor" fill="none"></path>
+              <line x1="11" y1="12" x2="13" y2="12" stroke="currentColor"></line>
+            </svg>
+            {firmwareCount}
+          </span>
+          
+          <span className={styles.stat} title="Documentos">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"></path>
+              <polyline points="13 2 13 9 20 9"></polyline>
+            </svg>
+            {documentCount}
+          </span>
+        </div>
+      </div>
+      
+      <a href={productUrl} className={styles.overlay}>
+        <span>Ver detalhes</span>
+      </a>
+    </div>
+  );
+}
+

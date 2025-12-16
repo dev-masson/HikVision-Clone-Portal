@@ -1,0 +1,45 @@
+/* Category Filter */
+
+.filterContainer {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+.filterButton {
+  padding: 0.625rem 1.25rem;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.filterButton:hover {
+  background: var(--hikvision-gray-medium);
+  border-color: var(--hikvision-gray);
+}
+
+.filterButton.active {
+  background: var(--hikvision-red);
+  border-color: var(--hikvision-red);
+  color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .filterContainer {
+    gap: 0.5rem;
+  }
+
+  .filterButton {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+}
+

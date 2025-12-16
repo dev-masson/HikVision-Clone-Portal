@@ -1,0 +1,35 @@
+[
+  {
+    "model": "DS-KIT342MFWX-E1",
+    "category": "Controle de Acesso",
+    "thumbnail": "/products/DS-KIT342MFWX-E1.png",
+    "files": {
+      "firmwares": [
+        {
+          "name": "Firmwares de sequência",
+          "description": "Atualização importante: corrige vulnerabilidades de segurança",
+          "type": "firmware",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        }
+      ],
+      "documents": [
+        {
+          "name": "Manual de Instalação.pdf",
+          "type": "pdf",
+          "date": "2024-02-01",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        }
+      ],
+      "videos": [
+        {
+          "name": "Tutorial de Instalação.mp4",
+          "type": "video",
+          "date": "2024-03-10",
+          "url": "https://www.youtube.com/watch?v=XXXX",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=VVVV"
+        }
+      ]
+    }
+  }
+]
