@@ -3,8 +3,8 @@
     "model": "DS-KH6350-WTE1",
     "category": "Video Porteiro",
     "type": "indoor",
-    "cloud": false,
-    "thumbnail": "https://drive.google.com/uc?export=download&id=SEU_ID",
+    "cloud": true,
+    "thumbnail": "",
     "files": {
       "firmwares": [
         {
