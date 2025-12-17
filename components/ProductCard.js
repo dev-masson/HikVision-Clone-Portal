@@ -13,7 +13,7 @@ export default function ProductCard({ product }) {
   const documentCount = product._fileCounts?.totalDocuments ?? ((product.files?.documents?.length || 0) + (product.files?.videos?.length || 0));
 
   return (
-    <div className={styles.card}>
+    <a href={productUrl} className={styles.card}>
       <div className={styles.imageContainer}>
         {imageUrl && !imageError ? (
           <img 
@@ -61,10 +61,10 @@ export default function ProductCard({ product }) {
         </div>
       </div>
       
-      <a href={productUrl} className={styles.overlay}>
+      <div className={styles.overlay}>
         <span>Ver detalhes</span>
-      </a>
-    </div>
+      </div>
+    </a>
   );
 }
 
