@@ -10,20 +10,41 @@ export default function FileCard({ file, viewMode = 'cards' }) {
     
     const url = file.downloadUrl || file.url || '';
     if (url) {
-      navigator.clipboard.writeText(url).then(() => {
+      // Verifica se a API Clipboard está disponível
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(() => {
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        }).catch(() => {
+          // Fallback se a API falhar
+          copyToClipboardFallback(url);
+        });
+      } else {
+        // Fallback para navegadores que não suportam a API Clipboard
+        copyToClipboardFallback(url);
+      }
+    }
+  };
+
+  const copyToClipboardFallback = (text) => {
+    try {
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-999999px';
+      textArea.style.top = '-999999px';
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      const successful = document.execCommand('copy');
+      document.body.removeChild(textArea);
+      
+      if (successful) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
-      }).catch(() => {
-        // Fallback para navegadores antigos
-        const textArea = document.createElement('textarea');
-        textArea.value = url;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        setCopied(true);
-        setTimeout(() => setCopied(false), 2000);
-      });
+      }
+    } catch (err) {
+      console.error('Erro ao copiar para a área de transferência:', err);
     }
   };
   const getFileIcon = (type) => {
@@ -31,10 +52,9 @@ export default function FileCard({ file, viewMode = 'cards' }) {
       case 'firmware':
         return (
           <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            {/* Símbolo </> */}
-            <path d="M8 9 L10 12 L8 15" stroke="currentColor" fill="none"></path>
-            <path d="M16 9 L14 12 L16 15" stroke="currentColor" fill="none"></path>
-            <line x1="11" y1="12" x2="13" y2="12" stroke="currentColor"></line>
+            <rect width="16" height="16" x="4" y="4" rx="2"/>
+            <rect width="6" height="6" x="9" y="9" rx="1"/>
+            <path d="M9 2v2M9 20v2M15 2v2M15 20v2M2 9h2M2 15h2M20 9h2M20 15h2"/>
           </svg>
         );
       case 'image':
@@ -78,14 +98,34 @@ export default function FileCard({ file, viewMode = 'cards' }) {
   };
 
   const formatDate = (dateString) => {
-    if (!dateString) return '-';
+    if (!dateString) return null;
+    
+    // Valida formato YYYY-MM-DD
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    if (!dateRegex.test(dateString)) return null;
+    
     const [year, month, day] = dateString.split('-');
-    const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+    const yearNum = parseInt(year);
+    const monthNum = parseInt(month);
+    const dayNum = parseInt(day);
+    
+
+    if (isNaN(yearNum) || isNaN(monthNum) || isNaN(dayNum)) return null;
+    const date = new Date(yearNum, monthNum - 1, dayNum);
+    if (
+      date.getFullYear() !== yearNum ||
+      date.getMonth() !== monthNum - 1 ||
+      date.getDate() !== dayNum
+    ) {
+      return null;
+    }
+    
     return date.toLocaleDateString('pt-BR');
   };
 
   if (viewMode === 'list') {
     const downloadUrl = file.downloadUrl || file.url || '#';
+    const formattedDate = file.date ? formatDate(file.date) : null;
     
     return (
       <div className={styles.listItem}>
@@ -97,9 +137,11 @@ export default function FileCard({ file, viewMode = 'cards' }) {
           {file.description && (
             <span className={styles.listDescription}>{file.description}</span>
           )}
-          <span className={styles.listMeta}>
-            Adicionado em: {formatDate(file.date)}
-          </span>
+          {formattedDate && (
+            <span className={styles.listMeta}>
+              Adicionado em: {formattedDate}
+            </span>
+          )}
         </div>
         <div className={styles.listActions}>
           <button 
@@ -137,6 +179,8 @@ export default function FileCard({ file, viewMode = 'cards' }) {
     );
   }
 
+  const formattedDate = file.date ? formatDate(file.date) : null;
+  
   return (
     <a 
       href={file.downloadUrl || file.url || '#'} 
@@ -155,7 +199,7 @@ export default function FileCard({ file, viewMode = 'cards' }) {
         <h3 className={styles.cardTitle}>{file.name}</h3>
         <div className={styles.cardMeta}>
           <span>{formatFileSize(file.size)}</span>
-          {file.date && <span>{formatDate(file.date)}</span>}
+          {formattedDate && <span>{formattedDate}</span>}
         </div>
       </div>
       <div className={styles.cardOverlay}>
