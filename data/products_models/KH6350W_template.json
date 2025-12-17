@@ -1,0 +1,36 @@
+[
+  {
+    "model": "DS-KH6350-WTE1",
+    "category": "Video Porteiro",
+    "type": "indoor",
+    "cloud": false,
+    "thumbnail": "https://drive.google.com/uc?export=download&id=SEU_ID",
+    "files": {
+      "firmwares": [
+        {
+          "name": "Firmwares de sequência",
+          "description": "Solução de Live View",
+          "type": "firmware",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        },
+        {
+          "name": "Firmware V2.2.108 build 250718.zip",
+          "description": "Mais recente",
+          "type": "firmware",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        },
+        {
+          "name": "Como fazer habilitação de desbloqueio na tela.pdf",
+          "type": "pdf",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/file/d/1nrvyIncScDGrWBcwS8lxhfYQ1qAMeWfj/view?usp=sharing"
+        }
+      ],
+      "documents": [],
+      
+      "videos": []
+    }
+  }
+]
