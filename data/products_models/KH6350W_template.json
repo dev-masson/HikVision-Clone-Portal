@@ -3,7 +3,7 @@
     "model": "DS-KH6350-WTE1",
     "category": "Video Porteiro",
     "type": "indoor",
-    "cloud": true,
+    "cloud": false,
     "thumbnail": "",
     "files": {
       "firmwares": [
