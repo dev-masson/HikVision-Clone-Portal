@@ -23,7 +23,7 @@ export default function SearchSection() {
     if (category) {
       setSelectedCategory(category);
     } else {
-      // Se não houver categoria na URL, usar "Todas"
+
       setSelectedCategory('Todas');
     }
     
@@ -31,7 +31,7 @@ export default function SearchSection() {
     if (q || category) {
       performSearch(q || '', category || 'Todas');
     } else {
-      // Se não houver parâmetros, carregar todos os produtos (categoria "Todas")
+      // Se não houver parâmetros, carregar todos os produtos
       performSearch('', 'Todas');
     }
   }, [router.query.q, router.query.category]);
@@ -42,7 +42,6 @@ export default function SearchSection() {
     setResults(null);
 
     try {
-      // Monta URL com query (se houver) e categoria
       let url = '/api/products/search?';
       if (searchQuery && searchQuery.trim()) {
         url += `q=${encodeURIComponent(searchQuery)}`;
@@ -70,22 +69,20 @@ export default function SearchSection() {
   const handleSearch = async (e) => {
     e?.preventDefault();
     
-    // Se não tem query nem categoria selecionada, limpa tudo
-    if (!query.trim() && selectedCategory === 'Todas') {
+    
+    if (!query.trim()) {
       router.push({
         pathname: '/',
-        query: {}
+        query: { 
+          ...(selectedCategory !== 'Todas' && { category: selectedCategory })
+        }
       }, undefined, { shallow: true });
-      
 
-      setResults(null);
-      setError(null);
-      setQuery('');
-      setSelectedCategory('Todas');
+      await performSearch('', selectedCategory);
       return;
     }
 
-    // Atualizar URL com parâmetros de busca
+    e
     router.push({
       pathname: '/',
       query: { 
@@ -94,15 +91,14 @@ export default function SearchSection() {
       }
     }, undefined, { shallow: true });
 
-
     await performSearch(query, selectedCategory);
   };
 
-  // Re-buscar quando categoria mudar
+  
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     
-    // Atualizar URL
+   
     router.push({
       pathname: '/',
       query: { 
@@ -111,7 +107,7 @@ export default function SearchSection() {
       }
     }, undefined, { shallow: true });
 
-    // Buscar automaticamente quando categoria mudar (com ou sem query)
+    // Buscar automaticamente quando categoria mudar 
     performSearch(query, category);
   };
 

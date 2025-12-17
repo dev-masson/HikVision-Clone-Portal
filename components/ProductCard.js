@@ -7,8 +7,10 @@ export default function ProductCard({ product }) {
   const imageUrl = product.thumbnail || null;
   const productUrl = `/produto/${encodeURIComponent(product.model)}`;
   const [imageError, setImageError] = useState(false);
-  const firmwareCount = product.files?.firmwares?.length || 0;
-  const documentCount = (product.files?.documents?.length || 0) + (product.files?.videos?.length || 0);
+  
+
+  const firmwareCount = product._fileCounts?.firmwares ?? (product.files?.firmwares?.length || 0);
+  const documentCount = product._fileCounts?.totalDocuments ?? ((product.files?.documents?.length || 0) + (product.files?.videos?.length || 0));
 
   return (
     <div className={styles.card}>
@@ -18,6 +20,7 @@ export default function ProductCard({ product }) {
             src={imageUrl} 
             alt={name}
             className={styles.productImage}
+            crossOrigin={imageUrl.startsWith('http') ? 'anonymous' : undefined}
             onError={() => {
               console.error('Erro ao carregar imagem:', imageUrl);
               setImageError(true);
