@@ -1,0 +1,45 @@
+[
+  {
+    "model": "DS-KIT342MFWX-E1",
+    "category": "Controle de Acesso",
+    "thumbnail": "/products/DS-KIT342MFWX-E1.png",
+    "files": {
+      "firmwares": [
+        {
+          "name": "Firmwares de sequência",
+          "description": "Sequência de 2023 até 2025",
+          "type": "firmware",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        }
+      ],
+      "documents": [
+        {
+          "name": "Intercomunicação com tela interna.pdf",
+          "type": "pdf",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        },
+        {
+          "name": "Ajuste Avançado de Reconhecimento Padrão.pdf",
+          "type": "pdf",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        },
+        {
+          "name": "Configuração de SIP padrão para faciais.pdf",
+          "type": "pdf",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        },
+        {
+          "name": "Configuração modo Propaganda para faciais.pdf",
+          "type": "pdf",
+          "date": "2025-12-16",
+          "downloadUrl": "https://drive.google.com/uc?export=download&id=SEU_ID"
+        }
+        
+      ]
+    }
+  }
+]
