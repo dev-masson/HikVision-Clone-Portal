@@ -1,6 +1,6 @@
 // Next.js API Route - GET /api/products/search
-// Busca produtos por modelo e categoria
-import { searchProducts } from '../../../lib/products';
+
+import { searchProducts, getProductFiles } from '../../../lib/products';
 
 export default async function handler(req, res) {
   if (req.method !== 'GET') {
@@ -10,15 +10,29 @@ export default async function handler(req, res) {
   try {
     const { q, category } = req.query;
     
-    // Permite busca apenas por categoria (sem query) ou por query + categoria
+    // Permite busca apenas por categoria ou por query + categoria
     const filteredProducts = searchProducts(q || '', category);
+    
+    // Contador de arquivos
+    const productsWithCounts = filteredProducts.map(product => {
+      const allFiles = getProductFiles(product);
+      return {
+        ...product,
+        _fileCounts: {
+          firmwares: allFiles.firmwares?.length || 0,
+          documents: allFiles.documents?.length || 0,
+          videos: allFiles.videos?.length || 0,
+          totalDocuments: (allFiles.documents?.length || 0) + (allFiles.videos?.length || 0)
+        }
+      };
+    });
     
     res.status(200).json({
       success: true,
-      total: filteredProducts.length,
+      total: productsWithCounts.length,
       query: q || '',
       category: category || 'Todas',
-      products: filteredProducts
+      products: productsWithCounts
     });
   } catch (error) {
     console.error('Erro ao buscar produtos:', error);

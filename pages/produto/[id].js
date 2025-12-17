@@ -113,6 +113,7 @@ export default function ProductDetail() {
                     src={product.thumbnail} 
                     alt={`Imagem do produto ${product.model}`}
                     className={styles.productImage}
+                    crossOrigin={product.thumbnail.startsWith('http') ? 'anonymous' : undefined}
                   />
                 ) : (
                   <div className={styles.placeholderImage}>
