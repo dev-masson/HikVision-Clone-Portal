@@ -4,19 +4,49 @@ import styles from '../styles/components/FileCard.module.css';
 export default function FileCard({ file, viewMode = 'cards' }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopyLink = (e) => {
+  const handleCopyLink = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     
     const url = file.downloadUrl || file.url || '';
+    const fileName = file.name || 'Link';
+    
     if (url) {
       // Verifica se a API Clipboard está disponível
-      if (navigator.clipboard && navigator.clipboard.writeText) {
+      if (navigator.clipboard && navigator.clipboard.write) {
+        try {
+          // Cria HTML formatado com o nome do arquivo como link
+          const htmlContent = `<a href="${url}">${fileName}</a>`;
+          const textContent = url; // Fallback para texto simples
+          
+          // Cria um objeto ClipboardItem com HTML e texto
+          const clipboardItem = new ClipboardItem({
+            'text/html': new Blob([htmlContent], { type: 'text/html' }),
+            'text/plain': new Blob([textContent], { type: 'text/plain' })
+          });
+          
+          await navigator.clipboard.write([clipboardItem]);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2000);
+        } catch (err) {
+          // Fallback: tenta copiar apenas o texto
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(url).then(() => {
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }).catch(() => {
+              copyToClipboardFallback(url);
+            });
+          } else {
+            copyToClipboardFallback(url);
+          }
+        }
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        // Fallback para navegadores que só suportam writeText
         navigator.clipboard.writeText(url).then(() => {
           setCopied(true);
           setTimeout(() => setCopied(false), 2000);
         }).catch(() => {
-          // Fallback se a API falhar
           copyToClipboardFallback(url);
         });
       } else {
