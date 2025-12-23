@@ -17,8 +17,8 @@ export default function Header() {
         </a>
         
         <nav className={styles.navDesktop}>
-          <a href="#produtos" className={styles.navLink}>Produto</a>
-          <a href="#software" className={styles.navLink}>Software</a>
+          <a href="/" className={styles.navLink}>Dispositivos</a>
+          <a href="/software" className={styles.navLink}>Softwares</a>
           <a href="#ferramentas" className={styles.navLink}>Ferramenta</a>
         </nav>
 
@@ -36,8 +36,8 @@ export default function Header() {
 
         {menuOpen && (
           <nav className={styles.navMobile}>
-            <a href="#produtos" className={styles.navLinkMobile}>Produto</a>
-            <a href="#software" className={styles.navLinkMobile}>Software</a>
+            <a href="/" className={styles.navLinkMobile}>Dispositivos</a>
+            <a href="/software" className={styles.navLinkMobile}>Softwares</a>
             <a href="#ferramentas" className={styles.navLinkMobile}>Ferramenta</a>
           </nav>
         )}

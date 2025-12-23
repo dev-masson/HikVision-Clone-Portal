@@ -4,7 +4,6 @@ const categories = [
   'Todas',
   'Access Point',
   'Alarmes',
-  'APP',
   'Câmeras',
   'Controle de Acesso',
   'Corneta',

@@ -12,48 +12,87 @@ export default function FileCard({ file, viewMode = 'cards' }) {
     const fileName = file.name || 'Link';
     
     if (url) {
-      // Verifica se a API Clipboard está disponível
-      if (navigator.clipboard && navigator.clipboard.write) {
-        try {
-          // Cria HTML formatado com o nome do arquivo como link
-          const htmlContent = `<a href="${url}">${fileName}</a>`;
-          const textContent = url; // Fallback para texto simples
-          
-          // Cria um objeto ClipboardItem com HTML e texto
-          const clipboardItem = new ClipboardItem({
-            'text/html': new Blob([htmlContent], { type: 'text/html' }),
-            'text/plain': new Blob([textContent], { type: 'text/plain' })
-          });
-          
-          await navigator.clipboard.write([clipboardItem]);
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        } catch (err) {
-          // Fallback: tenta copiar apenas o texto
-          if (navigator.clipboard && navigator.clipboard.writeText) {
-            navigator.clipboard.writeText(url).then(() => {
-              setCopied(true);
-              setTimeout(() => setCopied(false), 2000);
-            }).catch(() => {
-              copyToClipboardFallback(url);
-            });
-          } else {
-            copyToClipboardFallback(url);
-          }
-        }
-      } else if (navigator.clipboard && navigator.clipboard.writeText) {
-        // Fallback para navegadores que só suportam writeText
-        navigator.clipboard.writeText(url).then(() => {
-          setCopied(true);
-          setTimeout(() => setCopied(false), 2000);
-        }).catch(() => {
-          copyToClipboardFallback(url);
-        });
+      
+      const success = await copyFormattedLink(url, fileName);
+      
+      if (success) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       } else {
-        // Fallback para navegadores que não suportam a API Clipboard
+        // Fallback: copia apenas o texto
         copyToClipboardFallback(url);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
       }
     }
+  };
+
+  const copyFormattedLink = async (url, fileName) => {
+    
+    if (navigator.clipboard && navigator.clipboard.write) {
+      try {
+        const htmlContent = `<a href="${url}">${fileName}</a>`;
+        const textContent = url;
+        
+        const clipboardItem = new ClipboardItem({
+          'text/html': new Blob([htmlContent], { type: 'text/html' }),
+          'text/plain': new Blob([textContent], { type: 'text/plain' })
+        });
+        
+        await navigator.clipboard.write([clipboardItem]);
+        return true;
+      } catch (err) {
+        // Continua para o próximo método se falhar
+      }
+    }
+    
+    
+    try {
+      
+      const tempDiv = document.createElement('div');
+      tempDiv.contentEditable = true;
+      tempDiv.style.cssText = `
+        position: fixed;
+        left: -9999px;
+        top: -9999px;
+        width: 1px;
+        height: 1px;
+        opacity: 0;
+        pointer-events: none;
+        background: transparent !important;
+        color: inherit;
+      `;
+      
+      const link = document.createElement('a');
+      link.href = url;
+      link.textContent = fileName;
+      link.style.cssText = 'background: transparent !important; color: #0000EE; text-decoration: underline;';
+      
+      tempDiv.appendChild(link);
+      document.body.appendChild(tempDiv);
+      
+
+      const range = document.createRange();
+      range.selectNode(link);
+      const selection = window.getSelection();
+      selection.removeAllRanges();
+      selection.addRange(range);
+      
+
+      const successful = document.execCommand('copy');
+      
+
+      selection.removeAllRanges();
+      document.body.removeChild(tempDiv);
+      
+      if (successful) {
+        return true;
+      }
+    } catch (err) {
+      console.error('Erro ao copiar link formatado:', err);
+    }
+    
+    return false;
   };
 
   const copyToClipboardFallback = (text) => {
