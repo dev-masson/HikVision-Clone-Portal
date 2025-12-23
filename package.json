@@ -9,8 +9,8 @@
     "lint": "next lint",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "sync": "cd data/products && git pull",
-    "push-data": "cd data/products && git add . && git commit -m \"update data\" && git push"
+    "sync": "git -C data pull",
+    "push-data": "git -C data add . && git -C data commit -m \"update data\" && git -C data push"
   },
   "keywords": ["hikvision", "nextjs", "portal", "documentos", "produtos"],
   "author": "Hikvision Brasil",
