@@ -1,4 +1,4 @@
-/* Product Detail - Tema Escuro */
+/* Software Detail - Tema Escuro */
 
 .appContainer {
   min-height: 100vh;
@@ -61,79 +61,90 @@
 }
 
 .btnBack:hover {
-  background: var(--hikvision-gray-medium);
+  background: var(--hikvision-gray);
   border-color: var(--hikvision-red);
   color: var(--hikvision-red);
 }
 
-.btnBack svg {
-  transition: transform 0.3s;
-}
-
-.btnBack:hover svg {
-  transform: translateX(-3px);
-}
-
-/* Imagem do Produto */
-.productImageSection {
-  background: var(--hikvision-gray-dark);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 2rem;
+/* Seção de Imagem do Software */
+.softwareImageSection {
   text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
 }
 
-.productImageContainer {
-  max-width: 350px;
-  margin: 0 auto 1.5rem;
-}
-
-.productImage {
+.softwareImageContainer {
   width: 100%;
-  height: auto;
+  max-width: 300px;
+  height: 225px;
+  margin: 0 auto 1.5rem;
+  background: transparent;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.softwareImage {
+  width: 100%;
+  height: 100%;
   object-fit: contain;
-  max-height: 300px;
+  object-position: center;
 }
 
 .placeholderImage {
-  width: 100%;
-  aspect-ratio: 1;
-  background: var(--hikvision-gray-medium);
-  border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--text-secondary);
   gap: 1rem;
+  color: var(--text-secondary);
+  padding: 2rem;
 }
 
-.productTitle {
-  font-size: 1.5rem;
+.placeholderImage svg {
+  opacity: 0.5;
+}
+
+.placeholderImage p {
+  font-size: 1.125rem;
+  color: var(--text-secondary);
+}
+
+.softwareTitle {
+  font-size: 1.875rem;
   font-weight: 700;
-  color: var(--text-primary);
-  margin: 0 0 0.5rem;
+  color: var(--hikvision-red);
+  margin-bottom: 0.5rem;
 }
 
-.productCategory {
+.softwareVersion {
   font-size: 1rem;
   color: var(--text-secondary);
-  margin: 0;
+  margin-bottom: 0.5rem;
 }
 
-/* Modo de Visualização (removido - apenas lista agora) */
-.viewModeContainer {
-  display: none;
+.softwareCategory {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.softwareDescription {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
 }
 
 /* Seções de Arquivos */
 .filesSection {
-  background: var(--hikvision-gray-dark);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 3rem;
 }
 
 .sectionTitle {
@@ -141,9 +152,9 @@
   align-items: center;
   gap: 0.75rem;
   font-size: 1.25rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--text-primary);
-  margin: 0 0 1rem;
+  margin-bottom: 1rem;
   padding-bottom: 0.75rem;
   border-bottom: 2px solid var(--border-color);
 }
@@ -152,49 +163,44 @@
   color: var(--hikvision-red);
 }
 
-/* Grid de Arquivos (não usado mais) */
-.filesGrid {
-  display: none;
-}
-
-/* Lista de Arquivos */
 .filesList {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 
-/* Sem Arquivos */
 .noFiles {
   text-align: center;
-  padding: 3rem;
+  padding: 3rem 1rem;
   color: var(--text-secondary);
-  font-size: 1.1rem;
+  font-size: 1.125rem;
 }
 
-/* Responsividade */
+/* Responsive */
 @media (max-width: 768px) {
   .main {
-    padding: 1rem 0.5rem;
-  }
-  
-  .productImageSection {
-    padding: 2rem 1rem;
-  }
-  
-  .productTitle {
-    font-size: 1.5rem;
-  }
-  
-  .productCategory {
-    font-size: 1rem;
-  }
-  
-  .filesSection {
     padding: 1.5rem 1rem;
   }
-  
+
+  .softwareImageContainer {
+    height: 200px;
+    max-width: 100%;
+  }
+
+  .softwareTitle {
+    font-size: 2rem;
+  }
+
+  .softwareVersion {
+    font-size: 1.125rem;
+  }
+
+  .softwareDescription {
+    font-size: 1rem;
+  }
+
   .sectionTitle {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
   }
 }
+
