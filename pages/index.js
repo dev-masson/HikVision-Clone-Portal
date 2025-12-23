@@ -11,7 +11,7 @@ export default function Home() {
         <title>Hikvision – Portal de Arquivos</title>
         <meta name="description" content="Portal de Arquivos Hikvision - Busque documentos de configuração, manuais e softwares para seus dispositivos Hikvision" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </Head>
 
       <div className={styles.appContainer}>
