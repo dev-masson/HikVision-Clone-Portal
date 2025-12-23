@@ -229,12 +229,12 @@ export default function FileCard({ file, viewMode = 'cards' }) {
               </svg>
             )}
           </button>
-          <a 
-            href={downloadUrl} 
-            target="_blank" 
-            rel="noopener noreferrer"
+          <button 
             className={styles.downloadButton}
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+            }}
             title="Download"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -242,7 +242,7 @@ export default function FileCard({ file, viewMode = 'cards' }) {
               <polyline points="7 10 12 15 17 10"></polyline>
               <line x1="12" y1="15" x2="12" y2="3"></line>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     );
