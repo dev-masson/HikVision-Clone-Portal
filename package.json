@@ -4,7 +4,8 @@
   "description": "Portal de busca e gerenciamento de arquivos de produtos Hikvision",
   "scripts": {
     "dev": "next dev -H 0.0.0.0",
-    "build": "next build",
+    "setup": "node scripts/fetch-data.js",
+    "build": "npm run setup && next build",
     "start": "next start",
     "lint": "next lint",
     "lint:check": "prettier --check .",
