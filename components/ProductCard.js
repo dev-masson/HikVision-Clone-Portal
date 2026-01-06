@@ -2,12 +2,20 @@ import { useState } from 'react';
 import styles from '../styles/components/ProductCard.module.css';
 
 export default function ProductCard({ product }) {
-
-  const name = product.model || 'Sem nome';
-  const imageUrl = product.thumbnail || null;
-  const productUrl = `/produto/${encodeURIComponent(product.model)}`;
   const [imageError, setImageError] = useState(false);
   
+
+  const hasVariations = product.hasVariations || false;
+  const name = (hasVariations && product.groupName) ? product.groupName : (product.model || 'Sem nome');
+  const imageUrl = product.thumbnail || null;
+  const variationsCount = product.variationsCount || 0;
+  
+
+  // Para produtos com groupName, usa o groupName como identificador na URL
+  const variationKey = product.groupName ? encodeURIComponent(product.groupName) : encodeURIComponent(product.baseModel || product.model);
+  const productUrl = hasVariations 
+    ? `/produto/variacao/${variationKey}`
+    : `/produto/${encodeURIComponent(product.model)}`;
 
   const firmwareCount = product._fileCounts?.firmwares ?? (product.files?.firmwares?.length || 0);
   const documentCount = product._fileCounts?.totalDocuments ?? ((product.files?.documents?.length || 0) + (product.files?.videos?.length || 0));
@@ -36,6 +44,17 @@ export default function ProductCard({ product }) {
             </svg>
           </div>
         )}
+        
+        {/* Badge de variações */}
+        {hasVariations && variationsCount > 1 && (
+          <div className={styles.variationBadge}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path>
+              <rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect>
+            </svg>
+            {variationsCount} variações
+          </div>
+        )}
       </div>
       
       <div className={styles.cardContent}>
@@ -62,7 +81,7 @@ export default function ProductCard({ product }) {
       </div>
       
       <div className={styles.overlay}>
-        <span>Ver detalhes</span>
+        <span>{hasVariations ? 'Selecionar variação' : 'Ver detalhes'}</span>
       </div>
     </a>
   );
