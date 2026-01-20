@@ -80,6 +80,7 @@ export default function ProductVariation() {
       <>
         <Head>
           <title>Carregando... | Hikvision</title>
+          <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         </Head>
         <div className={styles.appContainer}>
           <Header />
